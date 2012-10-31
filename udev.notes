@@ -1,0 +1,60 @@
+3. PROBLEMS /dev
+- not portable
+- can't mount useful read-only file system
+- lookup time increased as /dev grows
+- many file systems don't support symlinks, block, character special files
+
+4. devfs
+- the driver calls devfs_register(), devfs_unregister
+- no persistent naming
+- Abandoned
+
+6. udev system
+- kernel part
+- daemon
+- command line utility
+
+7. /proc was 
+- originally intended to hold process data.
+- became cluttered over the years
+
+- in sysfs each file has one value and takes one value, if any
+
+/devices: status info, config options
+
+/bus/: buses
+/bus/devices: symlinks to /sys/devices
+/bus/drivers: drivers loaded and symlinks to their devices
+
+/class: symlinks to devices, grouped together
+/block: block devices.
+
+11. demo
+udevadm monitor
+udevadm info -a -p $(udevadm info -q path -n /dev/sdc1) 
+
+attribute walk
+devpath
+
+SUBSHELL:
+query
+name
+
+Write a rule:
+
+== compare for equality
+!= inequality
+= assign value
++= add value to key with list of entries
+:= add value and disallow any more changes
+ENV{key} Match against a device property value.
+
+ACTION=="add", KERNEL=="sd?1", ATTRS{vendor}=="[Mm]emorex*", SYMLINK+="memorex"
+
+12. HAL
+show HAL rule (gerda)
+show that udisks is running on Fedora
+
+
+
+
