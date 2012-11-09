@@ -1,0 +1,87 @@
+My name is Bonnie King and I'm a Linux sysadmin.  
+
+I'm going to talk about doing IO stuff in Python on the Raspberry Pi.
+
+I used to work for element14, one of the two companies licensed to
+manufacture and distribute the Raspberry Pi, but they didn't get into that until after I left.
+
+The people behind the Raspberry Pi Foundation (a UK-based non profit) wanted to build a cheap, accessible 
+computer for kids to learn programming on, something like the BBC Micro/Timex Sinclair which so many people learned on back in the 80s and 90s.
+
+So the Raspberry Pi is a single board computer with an ARM-based SOC (system on a chip) 
+which includes a pretty hefty GPU, can do HDMI out, 
+has a NIC, and USB.
+
+People are using it as a media center (screenshot)
+
+As supercomputers (cluster) (jpeg)
+
+And of course in education which is the Foundations mandate (kids)
+
+It also, and this is maybe the most exciting thing, at least to me, provides some low-level IO including all the most common 
+serial interfaces (UART, SPI, I2C).
+
+They tend to be missing from modern systems (we are pretty much stuck with USB usually).
+
+It has 8 GPIO, 
+
+This lends the Pi really well to electronics projects.  
+
+There are several microcontroller boards available such as Arduino that allow you to do physical computing and 
+make cool electronics projects.  
+
+Indeed, for minimalists the Pi is very much overkill (slide)
+for anything you could use an Arduino for.  But I like it because:
+
+- It has a NIC built-in
+- I already know linux and it can do things like run a web server, ssh, play media, etc
+- I can program it in my favourite language, Python, and my favourite sorta-language, bash...  
+
+So let me talk about the Python GPIO library and how to make stuff happen.
+
+Ben croston wrote a module Rpi.GPIO.  It actually only supports using the GPIO pins as inputs and outputs and 
+doesn't yet supprot SPI, I2C or PWM but seems to be under active development.  
+
+Basically after importing the module (slide)
+
+import RPi.GPIO as GPIO
+
+You need to set up a pin.  This is confusing, there are two numbering schemes for the GPIO pins, "BCM" and "BOARD", 
+referring to the pin numbers on the actual broadcom SOC and on the headers.
+
+So we set the mode to which numbering scheme we are going to use (slide)
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.BOARD is just an integer that...
+
+So then we do some setup on a pin:
+GPIO.setup(12, GPIO.OUT)
+
+This is going to set pin 12 on the board as an output.
+
+To turn this pin "on": (slide)
+GPIO.output(12, GPIO.HIGH)
+
+We can also set up the pin as an input.  (slide)
+GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+Pin 11 will be an input.  pull_up_down basically does... ?
+
+Then if we do (slide)
+input_value = GPIO.input(11)
+
+We can also do some fancier things with rising/falling edge detection which gives us the ability to change input/output states.
+
+Here is an example of a halloween thing I helped write.
+
+This has a web interface that I used bottle for.  But people are doing exciting things with web sockets.
+
+This Pi right here is flashing a blinky whenever it gets a click on this Geiger counter, which is a kit I bought from MightyOhm.
+
+
+
+
+
+
+
