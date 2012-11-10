@@ -42,6 +42,12 @@ So let me talk about the Python GPIO library and how to make stuff happen.
 Ben croston wrote a module Rpi.GPIO.  It actually only supports using the GPIO pins as inputs and outputs and 
 doesn't yet supprot SPI, I2C or PWM but seems to be under active development.  
 
+There is also a startup called Quick2Wire that has released a GPIO API for the Pi, they are working on expansion boards and stuff.  It's called quick2wire-python-api that does include serial interface support and also allows you to access the GPIO without root access.  It's also Python 3 only.
+
+Though despite the fact that I am a sysadmin I am less concerned about who has root on the pi. 
+
+For simple input and output, RPi.GPIO and quick2wire are pretty much equivalent in how they are used, so I'll talk about RPi.GPIO.
+
 Basically after importing the module (slide)
 
 import RPi.GPIO as GPIO
