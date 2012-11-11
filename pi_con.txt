@@ -2,91 +2,135 @@ My name is Bonnie King and I'm a Linux sysadmin.
 
 I'm going to talk about doing IO stuff in Python on the Raspberry Pi.
 
-I used to work for element14, one of the two companies licensed to
-manufacture and distribute the Raspberry Pi, but they didn't get into that until after I left.
+This is obviously going to be really short, basically I'll go over the hello world
+of pi GPIO.
 
-The people behind the Raspberry Pi Foundation (a UK-based non profit) wanted to build a cheap, accessible 
-computer for kids to learn programming on, something like the BBC Micro/Timex Sinclair which so many people learned on back in the 80s and 90s.
+****** 1 ******
 
-So the Raspberry Pi is a single board computer with an ARM-based SOC (system on a chip) 
+So the Raspberry Pi is a single board computer 
+with an ARM-based SOC (system on a chip) 
 which includes a pretty hefty GPU, can do HDMI out, 
-has a NIC, and USB.
+has ethernet built in, and USB.
+
+The people behind the Raspberry Pi Foundation i
+(a UK-based non profit) wanted to build a cheap, 
+accessible 
+computer for kids to learn programming on, something like the 
+BBC Micro/Timex Sinclair which so i
+many people learned on back in the 80s and 90s.
+
+****** 2 ******
 
 People are using it as a media center (screenshot)
 
-As supercomputers (cluster) (jpeg)
+****** 3 ******
+For parallel processing... (jpeg)
 
+****** 4 ******
 And of course in education which is the Foundations mandate (kids)
 
-It also, and this is maybe the most exciting thing, at least to me, provides some low-level IO including all the most common 
-serial interfaces (UART, SPI, I2C).
+****** 5 ******
+But they are also doing lots of reall awesome electronics projects.
+It also, and this is maybe the most exciting thing, at least to me, provides some low-level IO
 
-They tend to be missing from modern systems (we are pretty much stuck with USB usually).
+exposed on this header
 
-It has 8 GPIO, 
+****** 6 ******
+These pins are configurable to do different things including  all the most common 
+serial interfaces (UART, SPI, I2C).  
+They tend to be missing from modern PCs (we are pretty much stuck with USB usually).
+Some of them also can be used for general purpose
+input-output.
+
+Which means you can detect a high or low voltage (input)
+Or emit a voltage for output.
 
 This lends the Pi really well to electronics projects.  
 
-There are several microcontroller boards available such as Arduino that allow you to do physical computing and 
-make cool electronics projects.  
+There are several microcontroller boards such as Arduino 
+that allow you to do physical computing and 
 
-Indeed, for minimalists the Pi is very much overkill (slide)
+****** 7 ******
+You can't really compare them 
+and for minimalists the Pi is very much overkill (slide)
 for anything you could use an Arduino for.  But I like it because:
 
-- It has a NIC built-in
+****** 8 ******
 - I already know linux and it can do things like run a web server, ssh, play media, etc
 - I can program it in my favourite language, Python, and my favourite sorta-language, bash...  
+- It has ethernet built-in
+- Probably the one thing something like an arduino has that the Pi doesnt
+Is an Analog to Digital Converter or ADC, which limits what you can do with sensors,
+but you can get external components for that stuff.
 
+****** 9 ******
 So let me talk about the Python GPIO library and how to make stuff happen.
 
 Ben croston wrote a module Rpi.GPIO.  It actually only supports using the GPIO pins as inputs and outputs and 
 doesn't yet supprot SPI, I2C or PWM but seems to be under active development.  
 
-There is also a startup called Quick2Wire that has released a GPIO API for the Pi, they are working on expansion boards and stuff.  It's called quick2wire-python-api that does include serial interface support and also allows you to access the GPIO without root access.  It's also Python 3 only.
-
-Though despite the fact that I am a sysadmin I am less concerned about who has root on the pi. 
+****** 10 ******
+There is also a startup called Quick2Wire that has released a GPIO API for the Pi, they are working on producing expansion boards and stuff..  
+It's called quick2wire-python-api that does include serial interface support.  It's also Python 3 only.
 
 For simple input and output, RPi.GPIO and quick2wire are pretty much equivalent in how they are used, so I'll talk about RPi.GPIO.
+
+****** 12 ******
+this is what you do:
 
 Basically after importing the module (slide)
 
 import RPi.GPIO as GPIO
 
-You need to set up a pin.  This is confusing, there are two numbering schemes for the GPIO pins, "BCM" and "BOARD", 
+****** 13 *******
+You need to set up a pin.  
+There are two numbering schemes for the GPIO pins, "BCM" and "BOARD", 
+BCM stand for broadcom
 referring to the pin numbers on the actual broadcom SOC and on the headers.
+
+Most people seem to use the BCM numbering
 
 So we set the mode to which numbering scheme we are going to use (slide)
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
-GPIO.BOARD is just an integer that...
-
+***** 14 *****
 So then we do some setup on a pin:
-GPIO.setup(12, GPIO.OUT)
+GPIO.setup(17, GPIO.OUT)
 
-This is going to set pin 12 on the board as an output.
+This is going to set pin 17 on the board as an output.
 
+***** 15 *******
 To turn this pin "on": (slide)
-GPIO.output(12, GPIO.HIGH)
+GPIO.output(17, GPIO.HIGH)
 
+****** 16 ******
 We can also set up the pin as an input.  (slide)
-GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-Pin 11 will be an input.  pull_up_down basically does... ?
+GPIO.setup(4, GPIO.IN)
 
 Then if we do (slide)
-input_value = GPIO.input(11)
+******* 17 *******
+input_value = GPIO.input(4)
 
-We can also do some fancier things with rising/falling edge detection which gives us the ability to change input/output states.
+We can read a value, which corresponds to voltage detected on the pin.
+When the pin is high GPIO.input(4) will return True.
 
-Here is an example of a halloween thing I helped write.
-
-This has a web interface that I used bottle for.  But people are doing exciting things with web sockets.
-
+***** 18 *****
 This Pi right here is flashing a blinky whenever it gets a click on this Geiger counter, which is a kit I bought from MightyOhm.
 
+And this is the loop that's running on it...
 
+****** 19 *****
+Here is an example of a halloween thing I helped write.
 
+This has a web interface that I used bottle for.  But people are doing craxy things with web sockets.
+
+If you want to know more about making cool projects on the pi
+I recommend the adafruit tutorials.  
+
+on raspberry pi.org you can download the distro images, theres a blog and forum and stuff
+
+THank you!
 
 
 
