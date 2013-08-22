@@ -15,6 +15,49 @@ Why?
 
 - reduce duplicated effort at research sites, and provide
 common install base.
+- Red Hat Linux, CERN and Fermi both did their own versions
+- security issues (sendmail was on, no firewall), mostly changed installer
+- concept of workgroups (custom code in installer [written in C in Red Hat 5]), which turned into Sites
+- in 2003, Red Hat Linux went away
+- HEPiX October 2003, Connie proposed rebuilding srpms
+- easy for organizations to adopt
+- CERN mentioned that they could collaborate
+- HEPL was never really released, only ever released as SL (March 2003, HEPiX in May).
+
+- unify the Scientific Community on one OS.
+
+Why Red Hat?
+Debian, SuSE, Caldera, TurboLinux, Slackware
+Original Fermi Linux requirements:
+- needed a batch installer (kickstart
+- package manager that handled dependencies
+- ability to buy support if needed
+- needed the source (SuSE didn't originally release everything)
+- easy to install (physicists doing their own desktop installs etc)
+
+Scientific Linux requirements
+- Fermi (Connie and Troy) (and CERN) were familiar with the Red Hat way
+- source rpms available
+
+1996-1997
+- PC Farms pilot project to start using commodity PCs instead of SGIs etc
+- needed an OS
+- Looked at Linux, BSD (Linux had more traction)
+- pilot project running ~32 PCs (free Red Hat)
+- CHEP paper, 96 CHEP by "GP", the idea of using PCs for farm nodes
+- made Fermi Linux after encountering the security "issues"
+
+Connie was the group leader of the desktop support group (SGIs)
+Lisa was the leader of the farm group (SGI, IBM)
+
+1998
+CHEP was in Chicago, Connie announced Fermi Linux 5, based on Red Hat 5
+
+Troy packaged OpenAFS and Connie put it in the release.
+
+DESY was running SuSE and switched to Scientific Linux once released
+
+Urs Beyerle
 
 Used by?
 
