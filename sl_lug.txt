@@ -1,5 +1,7 @@
 Scientific Linux
 
+class {'xinetd::rsync': which => 'sl_distro_server'}
+
 - community rebuild of Red Hat Enterprise Linux, affectionately known
 as TUV (The Upstream Vendor)
 - NOT AFFILIATED, SANCTIONED OR SUPPORTED BY UPSTREAM
@@ -25,6 +27,9 @@ common install base.
 - HEPL was never really released, only ever released as SL (March 2003, HEPiX in May).
 
 - unify the Scientific Community on one OS.
+
+look at the code to figure out how it works (open source).
+
 
 Why Red Hat?
 Debian, SuSE, Caldera, TurboLinux, Slackware
@@ -122,12 +127,38 @@ Different from CentOS?
 - not really very different from centos
 - support for yum-security plugin
 - updateinfo.xml
+- concept of point releases
+- real time security updates (centos didn't before)
+- public testing process (beta, release candidates) (one of the reasons
+we look slow sometimes), centOS does internal QA.
+- security updates on by default (only EL that does this)
+- upstream claims compatibility... users are a lot of non-sysadmins
+- make it easy to respin, we encourage that (SLF, SL Kisti, SLC, Helios (GE)(sorta))
+
+- we publish our tools (rpmpatch)
+
+point release:
+
+- you get to schedule your updates, we don't choose
+- don't stay at a point release
+- in old rhel, difference between point releases was more unpredictable (like, different major kernel versions)...
+
+- we bundle some things (icewm)
+- openafs (there wasn't an EL openAFS until elrepo)
+- centos doesn't have the 3rd party repo packages
+- we try to put in good repos
+
+- centos' goal is to rebuild rhel, our different
+choices stem from goal of providing platform for research
+
 
 demo?
 
 Provides for easy CVE search
 • Provided by yum-plugin-security rpm
 • Requires updateinfo.xml in repodata/ which we will add
+
+- in all the sl6s
 
 yum info-sec --cve CVE-2011-2372
 Loaded plugins: refresh-packagekit, security
