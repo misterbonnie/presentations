@@ -1,0 +1,55 @@
+DEMO 1)
+
+# wget ftp://ftp.scientificlinux.org/linux/scientific/6.4/x86_64/external_products/softwarecollections/yum-conf-softwarecollections-1.0-1.el6.noarch.rpm
+
+# rpmls yum-conf-softwarecollections
+# cat /etc/yum.repos.d/softwarecollections.repo 
+
+# yum --disablerepo=* enablerepo=softwarecollections list available
+# yum -y install python33
+# scl enable python33 python
+<exit>
+# scl enable python33 bash
+# echo $PATH
+# echo $LD_LIBRARY_PATH
+# cd /opt/rh/python33/
+# cat enable
+# cd root
+# ls
+
+
+# wget ftp://ftp.scientificlinux.org/linux/scientific/6.4/x86_64/external_products/softwarecollections/yum-conf-softwarecollections-1.0-1.el6.noarch.rpm
+
+# rpmls yum-conf-softwarecollections
+# cat /etc/yum.repos.d/softwarecollections.repo
+
+# yum --disablerepo=* enablerepo=softwarecollections list available
+# yum -y install python33
+
+
+DEMO 2)
+
+# scl -l
+# scl enable python33 python
+<exit>
+# scl enable python33 bash
+
+# vim foo.py
+
+#!/usr/bin/env python
+print "hello world"
+
+# chmod 755 foo.py
+
+# ./foo.py
+# scl enable python33 ./foo.py
+
+Look at how it works:
+
+# echo $PATH
+# echo $LD_LIBRARY_PATH
+# cd /opt/rh/python33/
+# cat enable
+# cd root
+# ls
+
