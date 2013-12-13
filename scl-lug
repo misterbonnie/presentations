@@ -70,7 +70,10 @@ need scl-build-utils
 # cd ../RPMS
 # yum localinstall python33-hello_world-0.1-1.el6.rpm
 
+EXTRA)
 
+# yum -y install mariadb55
+# vim /etc/init.d/mariadb55-mysql
 
 
 
