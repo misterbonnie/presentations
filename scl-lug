@@ -57,6 +57,23 @@ Look at how it works:
 
 DEMO 3)
 
-# yum --enablerepo=* install sl-addons
+need scl-build-utils
+
+# rpm -ivh hello_world-0.1-1.el6.src.rpm
+# yum --enablerepo=* install spec2scl
 (need argparse from epel)
+
+# cd ~/rpmbuild/SPECS
+# spec2scl hello_world.spec > hello_world_scl.spec
+
+# rpmbuild -ba --define 'scl python33' hello_world_scl.spec 
+# cd ../RPMS
+# yum localinstall python33-hello_world-0.1-1.el6.rpm
+
+
+
+
+
+
+
 
