@@ -1,3 +1,5 @@
+
+
 DEMO 1)
 
 # wget ftp://ftp.scientificlinux.org/linux/scientific/6.4/x86_64/external_products/softwarecollections/yum-conf-softwarecollections-1.0-1.el6.noarch.rpm
@@ -52,4 +54,9 @@ Look at how it works:
 # cat enable
 # cd root
 # ls
+
+DEMO 3)
+
+# yum --enablerepo=* install sl-addons
+(need argparse from epel)
 
