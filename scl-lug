@@ -1,3 +1,6 @@
+ export LD_PRELOAD=/lib64/libglib-2.0.so.0:/lib64/libgobject-2.0.so.0
+
+
 
 
 DEMO 1)
