@@ -1,0 +1,232 @@
+Scientific Linux
+
+class {'xinetd::rsync': which => 'sl_distro_server'}
+
+- community rebuild of Red Hat Enterprise Linux, affectionately known
+as TUV (The Upstream Vendor)
+- NOT AFFILIATED, SANCTIONED OR SUPPORTED BY UPSTREAM
+- packaged by a dedicated team at Fermilab
+- active user community
+
+Who?
+
+- Project founded at Fermilab
+- everything hosted at fermilab
+
+Why?
+
+- reduce duplicated effort at research sites, and provide
+common install base.
+- Red Hat Linux, CERN and Fermi both did their own versions
+- security issues (sendmail was on, no firewall), mostly changed installer
+- concept of workgroups (custom code in installer [written in C in Red Hat 5]), which turned into Sites
+- in 2003, Red Hat Linux went away
+- HEPiX October 2003, Connie proposed rebuilding srpms
+- easy for organizations to adopt
+- CERN mentioned that they could collaborate
+- HEPL was never really released, only ever released as SL (March 2003, HEPiX in May).
+
+- unify the Scientific Community on one OS.
+
+
+
+Why Red Hat?
+Debian, SuSE, Caldera, TurboLinux, Slackware
+Original Fermi Linux requirements:
+- needed a batch installer (kickstart
+- package manager that handled dependencies
+- ability to buy support if needed
+- needed the source (SuSE didn't originally release everything)
+- easy to install (physicists doing their own desktop installs etc)
+
+Scientific Linux requirements
+- Fermi (Connie and Troy) (and CERN) were familiar with the Red Hat way
+- source rpms available
+
+1996-1997
+- PC Farms pilot project to start using commodity PCs instead of SGIs etc
+- needed an OS
+- Looked at Linux, BSD (Linux had more traction)
+- pilot project running ~32 PCs (free Red Hat)
+- CHEP paper, 96 CHEP by "GP", the idea of using PCs for farm nodes
+- made Fermi Linux after encountering the security "issues"
+
+Connie was the group leader of the desktop support group (SGIs)
+Lisa was the leader of the farm group (SGI, IBM)
+
+1998
+CHEP was in Chicago, Connie announced Fermi Linux 5, based on Red Hat 5
+
+Troy packaged OpenAFS and Connie put it in the release.
+
+DESY was running SuSE and switched to Scientific Linux once released
+
+Urs Beyerle
+
+Used by?
+
+Major research projects around the globe use Scientific Linux.
+
+
+Name?
+
+- called Scientific Linux because of the goals and user base of the project.
+- Scientific Linux is the "public" version of Scientific Linux Fermi AKA FermiLinux which is specifically configured
+for the lab (there is also Scientific Linux Cern, and soon to be Scientific Linux Kisti).
+
+History:
+
+- first release (who, why, when)
+- Fermilinux 5: august 1998
+- LTS 3, late 2003/early 2004, SL3 may 10 2004 based on RHEL
+
+
+Where it is used at the lab:
+
+- HPC
+- GRID
+- lattice QCD
+- CMS
+- other experiments
+- Theory
+- Scientific Workstations
+
+
+- Fermilab Run II (D0 and CDF)
+- Lattice QCD
+Fermilab operates large clusters of computers for LQCD as part of the national computational
+infrastructure for Lattice QCD established by the Department of Energy. Fermilab has
+successfully deployed 5 Lattice QCD production clusters totaling 2,500 nodes, each running
+Scientific Linux and reliably delivered over 55 sustained LQCD TFlop-years (over 250 Linpack
+TFlop-years) worth of computing since 2006. Scientific Linux kernels enabled the provisioning
+and managing of a highly scalable 0.5 Petabyte Lustre file-system delivering a peak aggregate
+bandwidth of 2GB/s required for large parallel jobs on the order of 1024 processes each.
+
+- CMS (Large Hadron Collider at CERN)
+Scientific Linux is an important component of the CMS Tier 1 facility at Fermilab. This
+distribution has been optimized for use for High Energy Physics (HEP), and is in use at our
+sister lab at CERN, giving collaborators all over the world a uniform interface to CMS
+applications. It is deployed at Fermilab on both interactive nodes and more than a thousand
+batch compute nodes. Critical services are deployed using Scientific Linux, including
+distributed storage systems, grid interfaces, data transfer agents, and workflow management
+systems.
+
+"Intensity Frontier"
+
+eg, MINOS
+Main Injector Oscillation Search (MINOS)
+The Minos experiment uses Scientific Linux for virtually all of its online and offline computing.
+This includes 32 systems in the data acquisition systems, control room computers, and all
+offline computing resources. Offline computing includes Interactive login systems, a local Batch
+system, MySQL and PostgreSQL database servers, Web application servers, Fermigrid
+systems, and all data storage servers.
+
+Different from CentOS?
+
+- not really very different from centos
+- support for yum-security plugin
+- updateinfo.xml
+- concept of point releases
+- real time security updates (centos didn't before)
+- public testing process (beta, release candidates) (one of the reasons
+we look slow sometimes), centOS does internal QA.
+- security updates on by default (only EL that does this)
+- upstream claims compatibility... users are a lot of non-sysadmins
+- make it easy to respin, we encourage that (SLF, SL Kisti, SLC, Helios (GE)(sorta))
+
+- we publish our tools (rpmpatch)
+
+point release:
+
+- you get to schedule your updates, we don't choose
+- don't stay at a point release
+- in old rhel, difference between point releases was more unpredictable (like, different major kernel versions)...
+
+- we bundle some things (icewm)
+- openafs (there wasn't an EL openAFS until elrepo)
+- centos doesn't have the 3rd party repo packages
+- we try to put in good repos
+
+- centos' goal is to rebuild rhel, our different
+choices stem from goal of providing platform for research
+
+
+demo?
+
+Provides for easy CVE search
+• Provided by yum-plugin-security rpm
+• Requires updateinfo.xml in repodata/ which we will add
+
+- in all the sl6s
+
+yum info-sec --cve CVE-2011-2372
+Loaded plugins: refresh-packagekit, security
+thunderbird-3.1.15-1.el6
+Update ID : SLSA-2011:1342-01
+Release : Scientific Linux 6
+Type : security
+Status : stable
+CVEs : CVE-2011-2372
+Files : thunderbird-3.1.15-1.el6_1.x86_64.rpm
+
+How?
+
+- staying inline with upstream requires a lot of time and infrastructure.
+- TUV publishes source RPMs for all packages.  Then we must
+build them using two tools:
+
+- mock (SL5)
+
+http://fedoraproject.org/wiki/Projects/Mock
+
+"Mock creates chroots and builds packages in them. 
+Its only task is to reliably populate a chroot and 
+attempt to build a package in that chroot."
+
+- creates a chrooted area, populate /proc, /sys...
+- uses a predefined list of rpms to install (which is actually a "metadata" rpm with
+just "requires"), buildsys-build
+- has a yum repo defined, where we will get rpms to fulfill dependencies
+
+- mock/koji (SL6)
+
+"Koji is the software that builds RPM packages for the 
+Fedora project. It uses Mock to create chroot environments 
+to perform builds."
+
+screen shot of SL koji?
+
+or look at
+http://koji.fedoraproject.org/koji/
+
+Revisor:
+- customize and compose an installation and live media
+- create "re-spins"
+
+
+Security:
+
+Red Hat Security Advisories (RHSA)
+
+- published on a best effort basis (within a couple of days of the RH alert)
+no guarantees...
+- bugfixes (RHBAs) are published every tuesday, in contrast to CentOS who
+publishes them in real time.
+
+Finally...
+
+Is Scientific Linux right for you?
+
+- Do you want support, an SLA, etc etc?
+
+Then use RHEL!
+
+How to get SL
+www.scientificlinux.org
+LiveCD
+www.livecd.ethz.ch
+
+Support
+
+- mailing lists
+- forums
