@@ -1,0 +1,66 @@
+history:
+
+there have been 3 different fs notification APIs in Linux
+
+dnotify could only watch dirs, made you open a new fd for each watch (you could hit open fd limit)
+
+- watches in inotify are limited to /proc/sys/fs/inotify/max_user_watches (8192 by default) 
+
+dnotify used signals
+
+dnotify built on existing fcntl() syscall
+
+dnotify kept filesystems busy
+
+dnotify had a limited set of monitorable events
+
+2.6.13: 2005
+added to glibc 2.4 in 2006
+
+desktop search: don't need to reindex
+
+other uses:
+
+- maintain a representation of objects in a file system (graphical file manager)
+- gatekeeping (antivirus)
+- reload configuration files
+- log changes
+- backups
+- sync
+
+polling: readir(), stat()... limited file operations
+
+#include <sys/inotify.h>
+int inotify_init(void)
+
+returns a file descriptor, which you read() to receive events
+
+read() blocks until event received
+
+man 7 inotify
+
+int inotify_add_watch(int fd, const char *pathname, int mask)
+
+- can't recursively watch dirs
+- not for use with sysfs or procfs0
+- only local file systems
+- rename is 2 events
+
+http://lwn.net/Articles/604686/
+
+read returns one or more inotify_event data structure
+
+    struct inotify_event {
+        int      wd;      /* Watch descriptor */
+        uint32_t mask;    /* Bit mask describing event */
+        uint32_t cookie;  /* Unique cookie associating related events */
+        uint32_t len;     /* Size of name field */
+        char     name[];  /* Optional null-terminated name */
+    };
+
+cookie is for interpreting rename events. when a file is moved, you get
+
+IN_MOVED_FROM
+IN_MOVED_TO
+
+there will be a unique cookie value to match up the 2 events
